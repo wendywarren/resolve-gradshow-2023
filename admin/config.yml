@@ -1,0 +1,2063 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: master
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: designer
+    label: Designers
+    folder: cms/designer
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Full Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: We need this to sort by last name on the homepage.
+        name: f_first-name
+        label: First Name
+        widget: string
+        required: false
+      - hint: We need this to sort by last name on the homepage.
+        name: f_last-name-for-sorting-on-homepage
+        label: Last Name
+        widget: string
+        required: false
+      - hint: ''
+        name: f_image-designer
+        label: image-designer
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_pronouns
+        label: Pronouns
+        widget: string
+        required: false
+      - hint: ''
+        name: f_info-pitch-designer
+        label: info-pitch-designer
+        widget: string
+        required: false
+      - hint: ''
+        name: f_instagram
+        label: instagram
+        widget: string
+        required: false
+      - hint: ''
+        name: f_instagram-img
+        label: instagram img
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_linkedin
+        label: linkedin
+        widget: string
+        required: false
+      - hint: ''
+        name: f_linkedin-img
+        label: linkedin img
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_portfolio
+        label: portfolio
+        widget: string
+        required: false
+      - hint: ''
+        name: f_email
+        label: email
+        widget: string
+        required: false
+      - hint: ''
+        name: f_work1
+        label: work1
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_work2
+        label: work2
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_work3
+        label: work3
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_video
+        label: video
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Url
+            widget: string
+            required: false
+      - hint: ''
+        name: f_skills
+        label: skills
+        widget: relation
+        required: false
+        collection: skills
+        value_field: cms/skills/{{slug}}.md
+        search_fields:
+          - slug
+          - name
+        display_fields:
+          - title
+        multiple: true
+      - hint: ''
+        name: f_previous-2
+        label: previous
+        widget: relation
+        required: false
+        collection: designer
+        value_field: cms/designer/{{slug}}.md
+        search_fields:
+          - slug
+          - name
+        display_fields:
+          - title
+        multiple: false
+      - hint: ''
+        name: f_next-2
+        label: next
+        widget: relation
+        required: false
+        collection: designer
+        value_field: cms/designer/{{slug}}.md
+        search_fields:
+          - slug
+          - name
+        display_fields:
+          - title
+        multiple: false
+      - hint: ''
+        name: f_skills-test
+        label: skills-test
+        widget: relation
+        required: false
+        collection: skills
+        value_field: cms/skills/{{slug}}.md
+        search_fields:
+          - slug
+          - name
+        display_fields:
+          - title
+        multiple: false
+      - hint: ''
+        name: f_email-icon-image
+        label: email-icon image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: designer
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[designer].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: skills
+    label: Skills icons & labels
+    folder: cms/skills
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: skill Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_skill-image
+        label: skill image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: skills
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[skills].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: Designers, key: -25835938'
+            label: Text
+            name: '-25835938'
+            widget: string
+          - hint: 'Original text: Supporters, key: 523a9f57'
+            label: Text
+            name: 523a9f57
+            widget: string
+          - hint: 'Original text: Event, key: 403827a'
+            label: Text
+            name: 403827a
+            widget: string
+          - hint: 'Original text: Class Introduction, key: -3c04dfe'
+            label: Text
+            name: '-3c04dfe'
+            widget: string
+          - hint: >-
+              Original text: We started this journey in 2020. In a time of
+              warranted hesitation and big unknowns, sixty-four individuals,
+              from far and wide, knew our goals couldn’t wait for the world to
+              be “normal.” We decided to firmly take action and step forward on
+              our education journey. We were determined to use this turbulent
+              time to prepare for the new world we all hoped would come., key:
+              1c51fc57
+            label: Text
+            name: 1c51fc57
+            widget: text
+          - hint: >-
+              Original text: For three years, we were a part of redefining what
+              it means to be a student, a freelancer, and a graphic designer. We
+              spent years learning and collaborating with each other from
+              makeshift bedroom offices, kitchen tables, and at times, car
+              passenger seats. Adding words to our daily vocabularies like
+              Slack, Discord, and Zoom. Our return to the classroom was a
+              welcomed trial. A return to the old, but with a whole host of new
+              skills, ready to thrive in whatever environment we could find
+              ourselves in., key: -20aaf784
+            label: Text
+            name: '-20aaf784'
+            widget: text
+          - hint: >-
+              Original text: Now we graduate into the new world we had hoped
+              for, proud of all our accomplishments, humbled by our failures,
+              and educated to know that both are worth celebrating. With deep
+              gratitude to our teachers; we thank them for getting us this far.
+              Now we aim our resolve to show the world what we have to offer.,
+              key: 28ce0032
+            label: Text
+            name: 28ce0032
+            widget: text
+          - hint: 'Original text: Learn More, key: -52bd880f'
+            label: Text
+            name: '-52bd880f'
+            widget: string
+          - hint: 'Original text: What Does, key: 69ce1655'
+            label: Text
+            name: 69ce1655
+            widget: string
+          - hint: 'Original text: Mean To Us?, key: 2cbd42d7'
+            label: Text
+            name: 2cbd42d7
+            widget: string
+          - hint: >-
+              Original text: To us, “Resolve” represents our determination and
+              resilience as students and graphic designers., key: -43fbb875
+            label: Text
+            name: '-43fbb875'
+            widget: text
+          - hint: >-
+              Original text: As students, we’ve followed through on our resolve
+              to overcome the many challenges we’ve faced in school and beyond
+              to be here today. As designers, we remain ever steadfast as we
+              navigate the design process to find solutions that effectively
+              communicate and engage audiences., key: 77cd9c1f
+            label: Text
+            name: 77cd9c1f
+            widget: text
+          - hint: >-
+              Original text: Our wordmark is made of unique shapes that unite to
+              form one message, similar to how we’ve come together to present
+              the 2023 Grad Show. Furthermore, these elements can be moved and
+              reorganized into various configurations, much like the
+              ever-changing industry we are merging into., key: -6b41b0eb
+            label: Text
+            name: '-6b41b0eb'
+            widget: text
+          - hint: >-
+              Original text: As we resolve our time in the Algonquin College
+              graphic design program, we look forward to bright new beginnings.,
+              key: -5e1d0ca9
+            label: Text
+            name: '-5e1d0ca9'
+            widget: text
+          - hint: 'Original text: Featured Work, key: -12341c3d'
+            label: Text
+            name: '-12341c3d'
+            widget: string
+          - hint: 'Original text: Branding, key: 2572f1b'
+            label: Text
+            name: 2572f1b
+            widget: string
+          - hint: 'Original text: Typography, key: 5500514f'
+            label: Text
+            name: 5500514f
+            widget: string
+          - hint: 'Original text: Print, key: 49cc28d'
+            label: Text
+            name: 49cc28d
+            widget: string
+          - hint: 'Original text: Illustration, key: 3ef5b970'
+            label: Text
+            name: 3ef5b970
+            widget: string
+          - hint: 'Original text: Web, key: 15334'
+            label: Text
+            name: '15334'
+            widget: string
+          - hint: 'Original text: UX/UI, key: 4d68980'
+            label: Text
+            name: 4d68980
+            widget: string
+          - hint: 'Original text: Motion, key: -7648542a'
+            label: Text
+            name: '-7648542a'
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: 'Original text: Class Reel, key: 61fd1c02'
+            label: Text
+            name: 61fd1c02
+            widget: string
+          - hint: >-
+              Original text: ©2023 Algonquin College Graphic Design Grad Show,
+              key: -258b3fde
+            label: Text
+            name: '-258b3fde'
+            widget: string
+          - hint: 'Original text: Gradshow 2023, key: -a3ec26c'
+            label: Text
+            name: '-a3ec26c'
+            widget: string
+          - hint: 'Original text: Graphic Design Program, key: -311a986'
+            label: Text
+            name: '-311a986'
+            widget: string
+          - hint: 'Original text: 50 , key: cce5'
+            label: Text
+            name: cce5
+            widget: string
+          - hint: 'Original text: D, key: 44'
+            label: Text
+            name: '44'
+            widget: string
+          - hint: 'Original text: 40 , key: c924'
+            label: Text
+            name: c924
+            widget: string
+          - hint: 'Original text: H, key: 48'
+            label: Text
+            name: '48'
+            widget: string
+          - hint: 'Original text: 32 , key: c5a1'
+            label: Text
+            name: c5a1
+            widget: string
+          - hint: 'Original text: M, key: 4d'
+            label: Text
+            name: 4d
+            widget: string
+          - hint: 'Original text: S, key: 53'
+            label: Text
+            name: '53'
+            widget: string
+          - hint: >-
+              Original text: Join us in celebrating the achievements of our
+              talented graphic designer cohort by making a donation towards
+              their graduation show., key: -5b21c1dc
+            label: Text
+            name: '-5b21c1dc'
+            widget: text
+          - hint: 'Original text: When?, key: 4facc25'
+            label: Text
+            name: 4facc25
+            widget: string
+          - hint: 'Original text: Thursday,, key: -2fcc4e8e'
+            label: Text
+            name: '-2fcc4e8e'
+            widget: string
+          - hint: 'Original text: April 13, 2023, key: -7e036271'
+            label: Text
+            name: '-7e036271'
+            widget: string
+          - hint: 'Original text: 5-9PM, key: 300325e'
+            label: Text
+            name: 300325e
+            widget: string
+          - hint: 'Original text: Where?, key: -65a133a8'
+            label: Text
+            name: '-65a133a8'
+            widget: string
+          - hint: 'Original text: Bayview Yards, , key: 722d8e0c'
+            label: Text
+            name: 722d8e0c
+            widget: string
+          - hint: 'Original text: 7 Bayview Station Rd, , key: -4e19804'
+            label: Text
+            name: '-4e19804'
+            widget: string
+          - hint: 'Original text: Ottawa, key: -72984a84'
+            label: Text
+            name: '-72984a84'
+            widget: string
+          - hint: 'Original text:  Donate Today, key: -437c9d90'
+            label: Text
+            name: '-437c9d90'
+            widget: string
+          - hint: >-
+              Original text: Your support makes this event possible. Donate to
+              the GoFundMe today!, key: 5dcb4086
+            label: Text
+            name: 5dcb4086
+            widget: string
+          - hint: 'Original text: Thank you!, key: 33b7d778'
+            label: Text
+            name: 33b7d778
+            widget: string
+          - hint: 'Original text: Thank You To All Our Supporters, key: 141823b8'
+            label: Text
+            name: 141823b8
+            widget: string
+          - hint: >-
+              Original text: A special thanks to our professors, Algonquin
+              college faculty and support staff who had the resolve to see us
+              through this 3-year program in the face of a global crisis.
+              They’ve demonstrated true determination and what is possible when
+              we commit to finding solutions to great challenges. Their quick
+              adaption and flexibility to ever-changing regulations made it
+              possible for us to reach our full potential online and in the
+              classroom despite adversity. We are deeply grateful for everything
+              they have done for us!, key: 6c7f4ed3
+            label: Text
+            name: 6c7f4ed3
+            widget: text
+          - hint: 'Original text: Professors, key: 2eaed404'
+            label: Text
+            name: 2eaed404
+            widget: string
+          - hint: 'Original text: Alain Paradis, key: 50778689'
+            label: Text
+            name: '50778689'
+            widget: string
+          - hint: 'Original text: David Bromley, key: 6bbb4346'
+            label: Text
+            name: 6bbb4346
+            widget: string
+          - hint: 'Original text: Robert Smith, key: 7f263fe5'
+            label: Text
+            name: 7f263fe5
+            widget: string
+          - hint: 'Original text: Andrea Emery, key: -5cc8ee45'
+            label: Text
+            name: '-5cc8ee45'
+            widget: string
+          - hint: 'Original text: Angie Fahlman, key: -6ab6ffef'
+            label: Text
+            name: '-6ab6ffef'
+            widget: string
+          - hint: 'Original text: David Bilenkey, key: 2a06c79d'
+            label: Text
+            name: 2a06c79d
+            widget: string
+          - hint: 'Original text: Wendy Warren, key: -71e4a082'
+            label: Text
+            name: '-71e4a082'
+            widget: string
+          - hint: 'Original text: Andrew Miller, key: -41898224'
+            label: Text
+            name: '-41898224'
+            widget: string
+          - hint: 'Original text: Anish Parmar, key: 198ec32c'
+            label: Text
+            name: 198ec32c
+            widget: string
+          - hint: 'Original text: Christina Muxlow, key: 49ee8f05'
+            label: Text
+            name: 49ee8f05
+            widget: string
+          - hint: 'Original text: Greg Treadwell, key: -380d35bb'
+            label: Text
+            name: '-380d35bb'
+            widget: string
+          - hint: 'Original text: Chelle Lorenzen, key: -17da711a'
+            label: Text
+            name: '-17da711a'
+            widget: string
+          - hint: 'Original text: Will Shaw, key: 9f3c0d9'
+            label: Text
+            name: 9f3c0d9
+            widget: string
+          - hint: 'Original text: Jamie Dean, key: 66b4025c'
+            label: Text
+            name: 66b4025c
+            widget: string
+          - hint: 'Original text: Kate Corsten, key: 7447c477'
+            label: Text
+            name: 7447c477
+            widget: string
+          - hint: 'Original text: Chris Jones, key: -2a2bd0d2'
+            label: Text
+            name: '-2a2bd0d2'
+            widget: string
+          - hint: >-
+              Original text: Thank you to our other professors not pictured: ,
+              key: -3d6736dd
+            label: Text
+            name: '-3d6736dd'
+            widget: string
+          - hint: 'Original text: Milena Hrebacka, key: -223ebec9'
+            label: Text
+            name: '-223ebec9'
+            widget: string
+          - hint: 'Original text: , , key: 574'
+            label: Text
+            name: '574'
+            widget: string
+          - hint: 'Original text: Katrin Emery, key: -ba8c4a3'
+            label: Text
+            name: '-ba8c4a3'
+            widget: string
+          - hint: 'Original text: Paul Byrne, key: -759e37e6'
+            label: Text
+            name: '-759e37e6'
+            widget: string
+          - hint: 'Original text: , and , key: 4d05ec9d'
+            label: Text
+            name: 4d05ec9d
+            widget: string
+          - hint: 'Original text: Glenn Gobuyan, key: 3b7f5ecb'
+            label: Text
+            name: 3b7f5ecb
+            widget: string
+          - hint: 'Original text: . We would also like to thank , key: -684919e0'
+            label: Text
+            name: '-684919e0'
+            widget: string
+          - hint: 'Original text: Brad St. Jean, key: 41828a28'
+            label: Text
+            name: 41828a28
+            widget: string
+          - hint: >-
+              Original text: , our Media and Design Technologist, and , key:
+              -7bb30251
+            label: Text
+            name: '-7bb30251'
+            widget: string
+          - hint: 'Original text: Mike Stacey, key: 205425a1'
+            label: Text
+            name: 205425a1
+            widget: string
+          - hint: 'Original text: , our Media and Design Technician., key: 669b4675'
+            label: Text
+            name: 669b4675
+            widget: string
+          - hint: 'Original text: Sponsors, key: -69968b47'
+            label: Text
+            name: '-69968b47'
+            widget: string
+          - hint: >-
+              Original text: Thank you to our generous sponsors for helping to
+              make this event possible. Your support has made this a memorable
+              night!, key: -14dd27be
+            label: Text
+            name: '-14dd27be'
+            widget: text
+          - hint: 'Original text: Bayview Yards, key: a6ce98'
+            label: Text
+            name: a6ce98
+            widget: string
+          - hint: 'Original text: Happy Fish, key: 4a322bd8'
+            label: Text
+            name: 4a322bd8
+            widget: string
+          - hint: 'Original text: Lieutenants Pump, key: -4de06534'
+            label: Text
+            name: '-4de06534'
+            widget: string
+          - hint: 'Original text: Partners, key: 4ab920cb'
+            label: Text
+            name: 4ab920cb
+            widget: string
+          - hint: >-
+              Original text: We would also like to thank the amazing vendors who
+              helped bring our event to life with their great services. , key:
+              539d2673
+            label: Text
+            name: 539d2673
+            widget: text
+          - hint: 'Original text: Vision Rentals, key: 7c9c1b97'
+            label: Text
+            name: 7c9c1b97
+            widget: string
+          - hint: 'Original text: FoodWorks, key: 34cf49a4'
+            label: Text
+            name: 34cf49a4
+            widget: string
+          - hint: 'Original text: The Print Shop, key: 233f6ff8'
+            label: Text
+            name: 233f6ff8
+            widget: string
+          - hint: 'Original text: Algonquin College Graphic Design, key: -67ad9185'
+            label: Text
+            name: '-67ad9185'
+            widget: string
+          - hint: 'Original text: Grad Show 2023, key: 7a1870f0'
+            label: Text
+            name: 7a1870f0
+            widget: string
+          - hint: 'Original text: 5 - 9 , key: 5c48bce5'
+            label: Text
+            name: 5c48bce5
+            widget: string
+          - hint: 'Original text: PM, key: 9fd'
+            label: Text
+            name: 9fd
+            widget: string
+          - hint: >-
+              Original text: Come celebrate the achievements of our talented
+              cohort at the RBC Foundry in Bayview Yards. Join us for the 1st in
+              person grad-show since the start of the pandemic. This year grad
+              show will be one to remember. We can’t wait to meet you!, key:
+              -56c62415
+            label: Text
+            name: '-56c62415'
+            widget: text
+          - hint: 'Original text: Need Directions?, key: 6e0c2161'
+            label: Text
+            name: 6e0c2161
+            widget: string
+          - hint: 'Original text: 7 Bayview Station Rd,, key: -4238d35c'
+            label: Text
+            name: '-4238d35c'
+            widget: string
+          - hint: 'Original text: Ottawa, K1Y 2C5, key: 26f5b447'
+            label: Text
+            name: 26f5b447
+            widget: string
+          - hint: 'Original text: Portfolio, key: -45b0dad8'
+            label: Text
+            name: '-45b0dad8'
+            widget: string
+          - hint: 'Original text: Protected Page, key: -11d4bbff'
+            label: Text
+            name: '-11d4bbff'
+            widget: string
+          - hint: 'Original text: Password, key: 4c641ebb'
+            label: Text
+            name: 4c641ebb
+            widget: string
+          - hint: >-
+              Original text: Incorrect password. Please try again., key:
+              -f5c4b5f
+            label: Text
+            name: '-f5c4b5f'
+            widget: string
+          - hint: 'Original text: 404, key: c938'
+            label: Text
+            name: c938
+            widget: string
+          - hint: 'Original text: Page Not Found, key: -40b0787c'
+            label: Text
+            name: '-40b0787c'
+            widget: string
+          - hint: >-
+              Original text: The page that you are looking for doesn't exist or
+              has been moved, sorry about that!, key: -59fbb7f3
+            label: Text
+            name: '-59fbb7f3'
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: 'Original link: #designers, key: -36eb01db'
+            label: Link
+            name: '-36eb01db'
+            widget: string
+          - hint: 'Original link: /supporters/, key: -4b2ffb7'
+            label: Link
+            name: '-4b2ffb7'
+            widget: string
+          - hint: 'Original link: /event/, key: 694cc1c4'
+            label: Link
+            name: 694cc1c4
+            widget: string
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: /#designers, key: 1f11cf94'
+            label: Link
+            name: 1f11cf94
+            widget: string
+          - hint: 'Original link: #section-2-cs, key: -402f828a'
+            label: Link
+            name: '-402f828a'
+            widget: string
+          - hint: >-
+              Original link:
+              https://www.gofundme.com/f/the-graphic-design-class-of-2023-needs-your-help?qid=99ea6aa532cdc8f0e23a495aaedf13e3,
+              key: -2ab6adde
+            label: Link
+            name: '-2ab6adde'
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: 6afaf569
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 39de96e6
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 207cc9c3
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i317f5eb3
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i5bc7c2ba
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 1834122c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3f5a476'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 1a1c2b43
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: ef3405a
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '70878612'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-78486fed'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 34844f5c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: a25324e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-68deafbb'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-430cfd70'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 304c6dc8
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 20dabcae
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-406d7b5d'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-598ac3dc'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 35943aa9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '2844e832'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3290098'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 19f048ef
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-9a18f6d'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 473750a9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3355fd04'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 15df1f5c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 51130faa
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: f29f0b9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 569d0fd2
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 6ef5be6a
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-498e565a'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 172d49e2
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-66448b08'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 3bcb101b
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2fa85249'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-58bd3ec3'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2abfa752'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-23b5ad98'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 3eb8102b
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-268c1a30'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-11bef202'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3ffe6d7'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 16c9bf72
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 3313eb70
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-c74e5d2'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 41bc4c4c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 7abba7ba
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-7a5f40f6'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2dcab44e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 36c5e456
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2536f4de'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-64dd841b'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: db1fbd
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-75c7f406'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-a3cb81f'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 592b98d5
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 556d7285
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-214cda53'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2dcf75c4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-69a6d22e'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 316d7b56
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 6da4c81f
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-673b8489'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 73f9b555
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-b0125de'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 668f2fe8
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-270ef829'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-46ac911e'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-224e0a1e'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2c29a68d
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-17864c40'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-99a8210'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 6afcdb71
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-6b665b79'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 48f9b742
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-40bb09c8'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 96a0bdb
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 611dd774
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4abef31c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
